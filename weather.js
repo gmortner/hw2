@@ -22,24 +22,16 @@ let convertToJSON = function(response) {
 
 //Run update
 let updateWeather = function(dataFromService) {
-
   city = dataFromService;
   city_Weather=dataFromService.weather[0];
-
-  let updatePic = document.getElementById("weather_pic");
-  updatePic.src = "http://openweathermap.org/img/w/" + city_Weather.icon + ".png";
-
-  let update_Location = document.getElementById("loc");
-  update_Location.innerHTML = city.name;
-
-  let updateTemp = document.getElementById("temp");
-  updateTemp.innerHTML = "It is "+ city.main.temp.toFixed(0) +" degrees outside. The current weather is " + city_Weather.description;
+  document.getElementById("weather_pic").src = "http://openweathermap.org/img/w/" + city_Weather.icon + ".png";
+  document.getElementById("loc").innerHTML = city.name;
+  document.getElementById("temp").innerHTML = "It is "+ city.main.temp.toFixed(0) +" degrees outside. The current weather is " + city_Weather.description;
 }
 
 
 //Get computer location
-let link = document.getElementById("get_forecast")
-link.addEventListener("click", function(event) {
+document.getElementById("get_forecast").addEventListener("click", function(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(getWeather);
 })
