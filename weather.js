@@ -1,9 +1,9 @@
 
 let getWeather = function(info) {
-  console.debug("Your device's current longitude is: ");
-  console.debug(info.coords.longitude.toFixed(4));
   console.debug("Your device's current latitude is: ");
   console.debug(info.coords.latitude.toFixed(4));
+  console.debug("Your device's current longitude is: ");
+  console.debug(info.coords.longitude.toFixed(4));
 
   let lat = info.coords.latitude.toFixed(4); //'41.8781'
   let lon = info.coords.longitude.toFixed(4); //'-87.6298'
@@ -13,17 +13,29 @@ let getWeather = function(info) {
   openweathermap_api_url +='&appid=4ce6f502d38ddae567bf1702b05e168c&units=imperial'
 
   fetch(openweathermap_api_url).then(convertToJSON).then(updateWeather).catch(displayError);
+}
 
+// Convert the weather service's raw response into JSON
+let convertToJSON = function(response) {
+  return response.json();
+}
+
+//Run update
+let updateWeather = function(dataFromService) {
+
+  city = dataFromService;
+  city_Weather=dataFromService.weather[0];
 
   let updatePic = document.getElementById("weather_pic");
-  updatePic.innerHTML = "http://openweathermap.org/img/w/" + openweathermap_api_url.weather.icon + ".png";
+  updatePic.src = "http://openweathermap.org/img/w/" + city_Weather.icon + ".png";
 
   let update_Location = document.getElementById("loc");
-  updateTemp.innerHTML = openweathermap_api_url.name;
+  update_Location.innerHTML = city.name;
 
   let updateTemp = document.getElementById("temp");
-  updateTemp.innerHTML = "It is "+ openweathermap_api_url.main.temp +" degrees outside";
+  updateTemp.innerHTML = "It is "+ city.main.temp.toFixed(0) +" degrees outside. The current weather is " + city_Weather.description;
 }
+
 
 //Get computer location
 let link = document.getElementById("get_forecast")
@@ -37,7 +49,3 @@ let displayError = function(error) {
   console.debug(error);
   window.alert("Sorry, something went wrong.");
 }
-
-// HINT:
-// Weather icon example: http://openweathermap.org/img/w/10d.png
-// The very last part ('10d.png') can change based on the current conditions.
