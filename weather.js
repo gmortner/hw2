@@ -13,6 +13,7 @@ let getWeather = function(info) {
   openweathermap_api_url +='&appid=4ce6f502d38ddae567bf1702b05e168c&units=imperial'
 
   fetch(openweathermap_api_url).then(convertToJSON).then(updateWeather).catch(displayError);
+//   console.debug(openweathermap_api_url)
 }
 
 // Convert the weather service's raw response into JSON
